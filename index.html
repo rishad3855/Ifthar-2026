@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iftar 2026 Mobile</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            background: #f0f2f5; margin: 0; padding-bottom: 20px; color: #1c1e21;
+        }
+        
+        /* Sticky Top Summary */
+        .sticky-header {
+            position: sticky; top: 0; background: #2c3e50; color: white;
+            padding: 15px; text-align: center; z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .sticky-header h1 { margin: 0; font-size: 1.2rem; }
+        .sticky-header .balance { font-size: 1.5rem; font-weight: bold; color: #2ecc71; margin-top: 5px; }
+
+        .container { padding: 12px; }
+
+        /* Quick Stats Grid */
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .stat-box { background: white; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #ddd; }
+        .stat-box span { display: block; font-size: 0.75rem; color: #65676b; text-transform: uppercase; }
+        .stat-box strong { font-size: 1.1rem; }
+
+        /* Payment List - Mobile Cards */
+        .list-header { font-weight: bold; margin: 20px 0 10px 5px; color: #4b4f56; }
+        .payment-card {
+            background: white; padding: 12px; border-radius: 8px; 
+            margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+            border-left: 4px solid #3498db; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .name-group { display: flex; flex-direction: column; }
+        .name-group .name { font-weight: 600; font-size: 1rem; }
+        .tag { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; margin-top: 4px; width: fit-content; }
+        .tag-nri { background: #e7f3ff; color: #1877f2; }
+        .tag-gpay { background: #e7f7ed; color: #2ecc71; }
+        .amount { font-weight: bold; font-size: 1rem; color: #1c1e21; }
+
+        /* Expense Table */
+        .expense-card { background: white; border-radius: 8px; padding: 15px; margin-top: 20px; }
+        .expense-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .expense-row:last-child { border: none; font-weight: bold; color: #e74c3c; }
+        
+        .debt-alert {
+            background: #fff0f0; border: 1px solid #ffc1c1; color: #d93025;
+            padding: 12px; border-radius: 8px; margin-top: 20px; font-size: 0.9rem; text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sticky-header">
+    <h1>Iftar 2026 Collection</h1>
+    <div class="balance">Total: ₹13,500</div>
+</div>
+
+<div class="container">
+    <div class="stats">
+        <div class="stat-box">
+            <span>Expenses</span>
+            <strong>₹12,690</strong>
+        </div>
+        <div class="stat-box">
+            <span>In Hand</span>
+            <strong style="color: #2ecc71;">₹810</strong>
+        </div>
+    </div>
+
+    <div class="list-header">Payments Received</div>
+    <div id="payment-list">
+        </div>
+
+    <div class="list-header">Expense List</div>
+    <div class="expense-card">
+        <div class="expense-row"><span>Food</span><span>₹9,500</span></div>
+        <div class="expense-row"><span>Sagam</span><span>₹1,430</span></div>
+        <div class="expense-row"><span>Carpet + Cloth</span><span>₹1,000</span></div>
+        <div class="expense-row"><span>Bulb</span><span>₹500</span></div>
+        <div class="expense-row"><span>Ice</span><span>₹260</span></div>
+        <div class="expense-row"><span>TOTAL EXPENSE</span><span>₹12,690</span></div>
+    </div>
+
+    <div class="debt-alert">
+        <strong>Outstanding to Suhaib:</strong><br>
+        ₹2,500 - ₹810 = <b>₹1,690 Owed</b>
+    </div>
+</div>
+
+<script>
+    const data = [
+        {n: "Fadhi", a: 300}, {n: "Faheem", a: 300}, {n: "Murthala", a: 300},
+        {n: "Jamshad", a: 500, t: "NRI 📍"}, {n: "Rifah", a: 300}, {n: "Hashim", a: 300},
+        {n: "Jaseem", a: 300}, {n: "Rahoof", a: 300}, {n: "Mustak", a: 300},
+        {n: "Shibil", a: 300}, {n: "Sinan", a: 300}, {n: "Ashiq", a: 300},
+        {n: "Yaseen", a: 300}, {n: "Safvan", a: 300}, {n: "Navaf", a: 300},
+        {n: "Aslam", a: 300, t: "NRI"}, {n: "Rishad", a: 500, t: "NRI 📍"},
+        {n: "Fasil", a: 500, t: "NRI 📍"}, {n: "Fahis", a: 500, t: "NRI GPay 📍"},
+        {n: "Basith", a: 300}, {n: "Zaid", a: 300, t: "GPay"},
+        {n: "Rishad", a: 300, t: "GPay"}, {n: "Thangal Thajudee", a: 500, t: "NRI 📍"},
+        {n: "Ashikpokkat", a: 500, t: "GPay 📍"}, {n: "Ziyad", a: 300, t: "GPay"},
+        {n: "Shamil", a: 300}, {n: "Shahin", a: 300}, {n: "Sajeelbabu", a: 300},
+        {n: "Salim", a: 300, t: "GPay"}, {n: "Ashif PK", a: 300, t: "GPay"},
+        {n: "Sali", a: 300}, {n: "Kuttipa", a: 300}, {n: "Haris", a: 500, t: "NRI 📍"},
+        {n: "Redhfan", a: 300}, {n: "Navas", a: 400, t: "📍"},
+        {n: "Anwer", a: 1000, t: "NRI 📍"}, {n: "Niyas", a: 500, t: "📍"}
+    ];
+
+    const listContainer = document.getElementById('payment-list');
+    data.forEach((item, index) => {
+        const tagClass = item.t?.includes('GPay') ? 'tag-gpay' : 'tag-nri';
+        const tagHtml = item.t ? `<span class="tag ${tagClass}">${item.t}</span>` : '';
+        
+        listContainer.innerHTML += `
+            <div class="payment-card">
+                <div class="name-group">
+                    <span class="name">${index + 1}. ${item.n}</span>
+                    ${tagHtml}
+                </div>
+                <div class="amount">₹${item.a}</div>
+            </div>
+        `;
+    });
+</script>
+
+</body>
+</html>
