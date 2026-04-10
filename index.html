@@ -3,139 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Statement - New TASC</title>
+    <title>Iftar 2026 Mobile</title>
     <style>
         * { box-sizing: border-box; }
         body { 
-            font-family: 'Helvetica Neue', Arial, sans-serif; 
-            background: #fdfdfd; margin: 0; padding-bottom: 40px; color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            background: #f0f2f5; margin: 0; padding-bottom: 20px; color: #1c1e21;
         }
-
-        /* Standard Professional Header */
-        .official-header {
-            background: #fff;
-            padding: 30px 20px;
-            text-align: center;
-            border-bottom: 3px solid #002244;
-        }
-        .logo-img { height: 80px; width: auto; margin-bottom: 10px; }
-        .club-name { font-size: 22px; font-weight: 800; color: #002244; letter-spacing: 0.5px; margin: 0; }
-        .document-title { font-size: 14px; color: #cc2233; font-weight: bold; text-transform: uppercase; margin-top: 5px; }
         
-        /* Summary Grid */
-        .summary-grid {
-            display: flex;
-            justify-content: space-around;
-            background: #002244;
-            color: white;
-            padding: 20px 10px;
+        /* Sticky Top Summary */
+        .sticky-header {
+            position: sticky; top: 0; background: #2c3e50; color: white;
+            padding: 15px; text-align: center; z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
-        .summary-item { text-align: center; }
-        .summary-item label { font-size: 10px; text-transform: uppercase; display: block; opacity: 0.8; margin-bottom: 5px; }
-        .summary-item value { font-size: 18px; font-weight: bold; display: block; }
-        .cash-highlight { color: #2ecc71; }
+        .sticky-header h1 { margin: 0; font-size: 1.2rem; }
+        .sticky-header .balance { font-size: 1.5rem; font-weight: bold; color: #2ecc71; margin-top: 5px; }
 
-        .container { padding: 20px 15px; max-width: 600px; margin: auto; }
+        .container { padding: 12px; }
 
-        /* List Styling */
-        .table-header {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 5px;
-            border-bottom: 2px solid #333;
-            font-size: 12px;
-            font-weight: bold;
-            color: #555;
-        }
-        .row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 5px;
-            border-bottom: 1px solid #eee;
-        }
-        .row:nth-child(even) { background: #fcfcfc; }
-        .name-part { font-size: 14px; font-weight: 500; }
-        .amt-part { font-family: 'Courier New', monospace; font-weight: bold; font-size: 15px; }
-        .tag { font-size: 9px; padding: 2px 5px; border-radius: 3px; font-weight: bold; margin-left: 5px; vertical-align: middle; }
-        .tag-nri { background: #e3f2fd; color: #1976d2; border: 1px solid #bbdefb; }
-        .tag-gpay { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        /* Quick Stats Grid */
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .stat-box { background: white; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #ddd; }
+        .stat-box span { display: block; font-size: 0.75rem; color: #65676b; text-transform: uppercase; }
+        .stat-box strong { font-size: 1.1rem; }
 
-        /* Expense Box */
-        .expense-card {
-            margin-top: 30px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background: white;
+        /* Payment List - Mobile Cards */
+        .list-header { font-weight: bold; margin: 20px 0 10px 5px; color: #4b4f56; }
+        .payment-card {
+            background: white; padding: 12px; border-radius: 8px; 
+            margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+            border-left: 4px solid #3498db; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        .exp-head { background: #f8f9fa; padding: 10px; font-size: 13px; font-weight: bold; border-bottom: 1px solid #ddd; }
-        .exp-row { display: flex; justify-content: space-between; padding: 10px; font-size: 13px; border-bottom: 1px solid #f1f1f1; }
-        .exp-row:last-child { background: #fff5f5; border-bottom: none; color: #cc2233; font-weight: bold; }
+        .name-group { display: flex; flex-direction: column; }
+        .name-group .name { font-weight: 600; font-size: 1rem; }
+        .tag { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; margin-top: 4px; width: fit-content; }
+        .tag-nri { background: #e7f3ff; color: #1877f2; }
+        .tag-gpay { background: #e7f7ed; color: #2ecc71; }
+        .amount { font-weight: bold; font-size: 1rem; color: #1c1e21; }
 
-        .final-debt {
-            margin-top: 20px;
-            padding: 15px;
-            border-left: 4px solid #cc2233;
-            background: #fff8f8;
-            font-size: 14px;
+        /* Expense Table */
+        .expense-card { background: white; border-radius: 8px; padding: 15px; margin-top: 20px; }
+        .expense-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .expense-row:last-child { border: none; font-weight: bold; color: #e74c3c; }
+        
+        .debt-alert {
+            background: #fff0f0; border: 1px solid #ffc1c1; color: #d93025;
+            padding: 12px; border-radius: 8px; margin-top: 20px; font-size: 0.9rem; text-align: center;
         }
-        .footer { text-align: center; font-size: 11px; color: #999; margin-top: 40px; padding: 20px; border-top: 1px solid #eee; }
+        .footer { text-align: center; padding: 30px; font-size: 0.75rem; color: #8a8d91; line-height: 1.6; }
     </style>
 </head>
 <body>
 
-<div class="official-header">
-    <img src="https://i.imgur.com/n1e9z9n.png" alt="Club Logo" class="logo-img">
-    <h1 class="club-name">NEW THOZHANOOR ARTS & SPORTS CLUB</h1>
-    <div class="document-title">Iftar 2026 • Financial Statement</div>
-</div>
-
-<div class="summary-grid">
-    <div class="summary-item">
-        <label>Cash In Hand</label>
-        <value class="cash-highlight">₹810</value>
-    </div>
-    <div class="summary-item">
-        <label>Total Collected</label>
-        <value>₹13,500</value>
-    </div>
-    <div class="summary-item">
-        <label>Total Expense</label>
-        <value>₹15,190</value>
-    </div>
+<div class="sticky-header">
+    <h1>Iftar 2026 Collection</h1>
+    <div class="balance">Total: ₹13,500</div>
 </div>
 
 <div class="container">
-    <div class="table-header">
-        <span>MEMBER PARTICIPANT</span>
-        <span>AMOUNT (₹)</span>
+    <div class="stats">
+        <div class="stat-box">
+            <span>Expenses</span>
+            <strong>₹15,190</strong>
+        </div>
+        <div class="stat-box">
+            <span>In Hand</span>
+            <strong style="color: #2ecc71;">₹810</strong>
+        </div>
+        <div class="stat-box">
+            <span>CMLP SCHOOL RALLY SWEETS</span>
+            <strong style="color: #000000;">850</strong>
+        </div>
+         <div class="stat-box">
+            <span>Shuhaib Balance</span>
+            <strong style="color: #c92222;">2500+850-810=2540</strong>
+        </div>
+        
     </div>
 
+    <div class="list-header">Payments Received</div>
     <div id="payment-list">
         </div>
 
+    <div class="list-header">Expense List</div>
     <div class="expense-card">
-        <div class="exp-head">EXPENDITURE BREAKDOWN</div>
-        <div class="exp-row"><span>Food Catering</span><span>9,500</span></div>
-        <div class="exp-row"><span>General Expenses (Suhaib)</span><span>2,500</span></div>
-        <div class="exp-row"><span>Sagam / Utilities</span><span>1,430</span></div>
-        <div class="exp-row"><span>Carpet & Decoration</span><span>1,000</span></div>
-        <div class="exp-row"><span>CMLP School Rally Sweets</span><span>850</span></div>
-        <div class="exp-row"><span>Bulb / Lighting</span><span>500</span></div>
-        <div class="exp-row"><span>Ice Blocks</span><span>260</span></div>
-        <div class="exp-row"><span>TOTAL EXPENDITURE</span><span>15,190</span></div>
+        <div class="expense-row"><span>Food</span><span>₹9,500</span></div>
+        <div class="expense-row"><span>Sagam</span><span>₹1,430</span></div>
+        <div class="expense-row"><span>Carpet + Cloth</span><span>₹1,000</span></div>
+        <div class="expense-row"><span>Bulb</span><span>₹500</span></div>
+        <div class="expense-row"><span>Ice</span><span>₹260</span></div>
+        <div class="expense-row"><span>Shuhaib</span><span>₹2500</span></div>
+        <div class="expense-row"><span>TOTAL EXPENSE</span><span>₹15,190</span></div>
     </div>
 
-    <div class="final-debt">
-        <strong>Outstanding Owed to Suhaib:</strong><br>
-        <span style="font-size: 18px; color: #cc2233;">₹2,540</span><br>
-        <small style="color: #666;">(₹2,500 Base + ₹850 Sweets - ₹810 Paid)</small>
+    <div class="debt-alert">
+        <strong>Outstanding to Suhaib:</strong><br>
+        ₹2,500+850- ₹810 = <b>₹2540 Owed</b>
     </div>
 </div>
-
 <div class="footer">
-    NEW TASC Variyath, Malappuram<br>
-    Official Account Statement Generated on April 10, 2026
+    <strong>NEW TASC ARTS & SPORTS CLUB</strong><br>
+    Variyath, 2026 Iftar Accounts Summary<br>
+    <i>Generated for Internal Club Records</i>
 </div>
 
 <script>
@@ -146,26 +116,29 @@
         {n: "Shibil", a: 300}, {n: "Sinan", a: 300}, {n: "Ashiq", a: 300},
         {n: "Yaseen", a: 300}, {n: "Safvan", a: 300}, {n: "Navaf", a: 300},
         {n: "Aslam", a: 300, t: "NRI"}, {n: "Rishad", a: 500, t: "NRI 📍"},
-        {n: "Fasil", a: 500, t: "NRI 📍"}, {n: "Fahis", a: 500, t: "GPay 📍"},
-        {n: "Basith", a: 300}, {n: "Zaid", a: 300, t: "GPAY"},
-        {n: "Rishad", a: 300, t: "GPAY"}, {n: "Thangal Thajudee", a: 500, t: "NRI 📍"},
-        {n: "Ashikpokkat", a: 500, t: "GPAY 📍"}, {n: "Ziyad", a: 300, t: "GPAY"},
+        {n: "Fasil", a: 500, t: "NRI 📍"}, {n: "Fahis", a: 500, t: "NRI GPay 📍"},
+        {n: "Basith", a: 300}, {n: "Zaid", a: 300, t: "GPay"},
+        {n: "Rishad", a: 300, t: "GPay"}, {n: "Thangal Thajudee", a: 500, t: "NRI 📍"},
+        {n: "Ashikpokkat", a: 500, t: "GPay 📍"}, {n: "Ziyad", a: 300, t: "GPay"},
         {n: "Shamil", a: 300}, {n: "Shahin", a: 300}, {n: "Sajeelbabu", a: 300},
-        {n: "Salim", a: 300, t: "GPAY"}, {n: "Ashif PK", a: 300, t: "GPAY"},
+        {n: "Salim", a: 300, t: "GPay"}, {n: "Ashif PK", a: 300, t: "GPay"},
         {n: "Sali", a: 300}, {n: "Kuttipa", a: 300}, {n: "Haris", a: 500, t: "NRI 📍"},
         {n: "Redhfan", a: 300}, {n: "Navas", a: 400, t: "📍"},
-        {n: "Anwer", a: 1000, t: "NRI 📍"}, {n: "Niyas", a: 500, t: "📍"}
+        {n: "Anwer", a: 1000, t: "NRI 📍"}, {n: "Niyas", a: 500, t: "📍"},{n: "Siyad kunju", a: 300, t: "Pending"}
     ];
 
-    const listDiv = document.getElementById('payment-list');
+    const listContainer = document.getElementById('payment-list');
     data.forEach((item, index) => {
-        const tagType = item.t?.toLowerCase().includes('gpay') ? 'tag-gpay' : 'tag-nri';
-        const tagHtml = item.t ? `<span class="tag ${tagType}">${item.t}</span>` : '';
+        const tagClass = item.t?.includes('GPay') ? 'tag-gpay' : 'tag-nri';
+        const tagHtml = item.t ? `<span class="tag ${tagClass}">${item.t}</span>` : '';
         
-        listDiv.innerHTML += `
-            <div class="row">
-                <div class="name-part">${index + 1}. ${item.n} ${tagHtml}</div>
-                <div class="amt-part">${item.a}</div>
+        listContainer.innerHTML += `
+            <div class="payment-card">
+                <div class="name-group">
+                    <span class="name">${index + 1}. ${item.n}</span>
+                    ${tagHtml}
+                </div>
+                <div class="amount">₹${item.a}</div>
             </div>
         `;
     });
